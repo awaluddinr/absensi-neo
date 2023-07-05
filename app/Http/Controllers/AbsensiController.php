@@ -13,6 +13,7 @@ class AbsensiController extends Controller
 
     public function daftar_absensi_user()
     {
+        // jkjkjkjkjkjk
         return view('absensi.daftar-absensi-user');
     }
 }
