@@ -7,6 +7,8 @@ Route::get('/', function () {
     return redirect()->route('dashboard');
 });
 
+Route::get('/login-admin', [BackController::class, 'login_admin'])->name('login-admin');
+Route::post('/proses-login', [BackController::class, 'post_login'])->name('proses-login');
 // dashboard route
 Route::group(['prefix' => '/dashboard'], function () {
     Route::get('/', [BackController::class, 'index'])->name('dashboard');
