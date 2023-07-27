@@ -33,6 +33,13 @@
                 <div class="card shadow rounded pb-2">
                     <div class="card-body">
                         <div class="absensi">
+                            @if (session('status'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>{{ session('status') }}</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
+                            @endif
                             <form>
                                 <div class="mb-3">
                                     <label for="floatingTextarea" class="mb-3">Deskripsi Kegiatan</label>
@@ -45,7 +52,23 @@
                                     <input type="datetime-local" class="form-control" value="{{ now() }}">
                                 </div>
                                 <div class="mb-0 text-center">
-                                    <button type="submit" class="btn btn-primary rounded-pill col-12">Absen Masuk
+                                    <a href="{{ route('absen-cam') }}" class="btn btn-primary rounded-pill col-12">Absen
+                                        Masuk
+                                    </a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow rounded pb-2">
+                    <div class="card-body">
+                        <div class="absensi">
+                            <form>
+                                <div class="mb-3">
+                                    <label class="form-label">Tanggal Absen</label>
+                                    <input type="datetime-local" class="form-control" value="{{ now() }}">
+                                </div>
+                                <div class="mb-0 text-center">
+                                    <button type="submit" class="btn btn-danger rounded-pill col-12">Absen Pulang
                                     </button>
                             </form>
                         </div>

@@ -16,4 +16,9 @@ class AbsensiController extends Controller
         // jkjkjkjkjkjk
         return view('absensi.daftar-absensi-user');
     }
+
+    public function konfirmasi_absen(Request $request)
+    {
+        return redirect()->route('absen')->with('status', 'Anda berhasil melakukan absensi');
+    }
 }

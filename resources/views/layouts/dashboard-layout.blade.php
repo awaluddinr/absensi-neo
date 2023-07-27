@@ -16,9 +16,19 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('assets/stisla/dist') }}/assets/css/style.css">
     <link rel="stylesheet" href="{{ asset('assets/stisla/dist') }}/assets/css/components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <!-- Start GA -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
     <script></script>
+    <style>
+        h1.animasi {
+            top: 0px;
+            animation: bounceInDown;
+            /* referring directly to the animation's @keyframe declaration */
+            animation-duration: .75s;
+            /* don't forget to set a duration! */
+        }
+    </style>
 
     @stack('css')
     <!-- /END GA -->
@@ -64,8 +74,33 @@
 
                 </div>
             </footer>
+            <div class="modal show modalsukses animate__animated" data-animate-in='animate__bounceIn'
+                data-animate-out="animate__bounceOutDown" id="successModal" tabindex="-1" role="dialog"
+                aria-labelledby="successModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" style="max-width: 400px">
+                    <div class="modal-content">
+                        <div class="modal-header overflow-hidden py-1 d-block border-bottom-0 text-center">
+                            <h1 class="modal-title animate__animated ikon text-success position-relative"
+                                id="successModalLabel" style="font-size: 5em">
+                                <i class="fa fa-check-circle"></i>
+                            </h1>
+                        </div>
+                        <div class="modal-body py-3 px-3 text-center">
+                            <h3>{{ session('sukses') }}</h3>
+                        </div>
+                        <div class="mb-0 text-center pb-4">
+                            <button type="button" class="btn btn-primary keluar rounded-pill" data-dismiss="modal"
+                                aria-label="Close">
+                                <p class="mb-0 px-3">OK</p>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    @include('sweetalert::alert')
 
     <!-- General JS Scripts -->
     <script src="{{ asset('assets/stisla/dist') }}/assets/modules/jquery.min.js"></script>
@@ -83,6 +118,57 @@
     <!-- Template JS File -->
     <script src="{{ asset('assets/stisla/dist') }}/assets/js/scripts.js"></script>
     <script src="{{ asset('assets/stisla/dist') }}/assets/js/custom.js"></script>
+    <script>
+        (function($) {
+            $.fn.bmcModal = function() {
+                var self = $(this);
+
+                if (self.attr('data-animate-in')) {
+                    self.addClass('animate__animated');
+                    self.addClass(self.attr('data-animate-in'));
+                }
+
+                self.on('hide.bs.modal', function(event) {
+                        if (!self.attr('data-end-hide') && self.attr('data-animate-out')) {
+                            event.preventDefault();
+
+                            self.addClass(self.attr('data-animate-out'));
+                            if (self.attr('data-animate-in')) {
+                                self.removeClass(self.attr('data-animate-in'));
+                            }
+                        }
+                        self.removeAttr('data-end-hide');
+                    })
+                    .on('animationend', function() {
+                        if (self.attr('data-animate-out') && self.hasClass(self.attr('data-animate-out'))) {
+                            self.attr('data-end-hide', true);
+                            self.modal('hide');
+                            self.removeClass(self.attr('data-animate-out'));
+                            if (self.attr('data-animate-in')) {
+                                self.addClass(self.attr('data-animate-in'));
+                            }
+                        }
+                    })
+            };
+
+            $(document).ready(function() {
+                $('.modalgagal').bmcModal();
+                $('.modalsukses').bmcModal();
+            })
+        })(jQuery);
+
+
+
+        // $('.modal-title').removeClass('ikon')
+        @if (session('gagal'))
+            $('.modalgagal').modal('show');
+            $('.modal-title').addClass('animasi');
+        @endif
+        @if (session('sukses'))
+            $('.modalsukses').modal('show');
+            $('.modal-title').addClass('animasi');
+        @endif
+    </script>
 
     @stack('js')
 </body>

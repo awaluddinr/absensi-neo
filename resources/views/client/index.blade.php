@@ -1,6 +1,11 @@
 @extends('layouts.client-layouts')
 
 @push('css')
+    <script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
     <style>
         #header-item {
             width: 100%;
@@ -61,7 +66,14 @@
                         data-bs-toggle="dropdown" class="border border-2 border-light rounded-pill" width="35">
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item" href="#">Profil</a></li>
-                        <li><a class="dropdown-item" href="#">Log-out</a></li>
+                        <li>
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="dropdown-item">
+                                    Log Out
+                                </button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
             </div>

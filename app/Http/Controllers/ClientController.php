@@ -20,4 +20,14 @@ class ClientController extends Controller
     {
         return view('client.kegiatan');
     }
+
+    public function absen_cam()
+    {
+        return view('client.cam-absen');
+    }
+
+    public function absen_loc()
+    {
+        return view('client.loc-absen');
+    }
 }
