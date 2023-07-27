@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Login;
 
 class ClientController extends Controller
 {
     public function index()
     {
+        $session_users = session('data_login');
+        $users = Login::find($session_users->id);
+        if ($users->login_level == 'admin') {
+            return redirect()->route('dashboard');
+        }
         return view('client.index');
     }
 
